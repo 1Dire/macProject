@@ -1,38 +1,147 @@
-.App {
-  text-align: center;
+.desktop {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+}
+.desktop.over {
+  height: 100vh;
+}
+.window-box {
+  width: 100%;
+  height: 100%;
+  background-image: url("./img/background/wallpaper.jpeg");
+  background-size: 100% 100%;
+  background-position: cover cover;
+  background-repeat: no-repeat;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.menu-bar {
+  height: 2%;
+  background-color: #fff;
+  opacity: 0.6;
 }
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.menu-bar ul {
+  display: inline-flex;
+  height: 100%;
 }
+.menu-bar ul li {
+  display: inline-flex;
+  padding: 0 10px;
+  height: 100%;
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  cursor: default;
+}
+.window {
+  height: 98%;
+  position: relative;
+}
+.window .content {
+  width: 100%;
+  height: 93%;
+  position: relative;
+}
+.window .dock {
+  width: 100%;
+  position: absolute;
+  bottom: 0px;
+  height: 7%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.window .dock ul {
+  display: inline-flex;
+  height: 100%;
+  border-radius: 0.5rem;
+  background-color: rgba(255, 255, 255, 0.4);
+
+  align-items: center;
 }
 
-.App-link {
-  color: #61dafb;
+.icon {
+  height: 85%;
+  aspect-ratio: 1 / 1;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 0.5rem;
+}
+.sample-icon {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: yellow;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.content-box {
+  position: absolute;
+  top: 5%;
+  left: 10%;
+  width: 80%;
+  height: 80%;
+  background-color: #fff;
+}
+
+.content-box {
+  display: flex;
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+.content-box > div {
+  height: 100%;
+}
+.content-box .content-left {
+  background-color: #4a4c4f;
+  padding-left: 0.6rem;
+}
+.content-box .content-right {
+  background-color: #1d2024;
+}
+.content-btn-box{
+  width:100%;
+  padding: 1.3rem 0;
+
+}
+.content-btn-box ul{
+  width: 100%;
+ 
+  display:inline-flex
+}
+.content-btn-box ul li{
+  margin:0 5px;
+}
+.content-btn-box ul li span{
+  display:inline-block;
+  width:15px;
+  height:15px;
+  border-radius: 15px;
+
+}
+.content-title  span{
+  color:#7D7F82;
+  font-size:0.8rem;
+}
+
+.content-list li{
+  padding: 0.5rem 0;
+  padding-left:5px;
+
+}
+.content-list li span{
+  color:#fff;
+  font-size:0.9rem;
+}
+
+.red-bt{
+  background-color: #EC6A5E;
+}
+.yellow-bt{
+  background-color: #F4BF50;
+}
+.green-bt{
+  background-color: #61C554;
 }

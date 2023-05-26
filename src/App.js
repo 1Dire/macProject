@@ -1,23 +1,38 @@
-import logo from './logo.svg';
+
 import './App.css';
+import Desktop from './component/desktop/desktop';
+import { useState } from 'react';
+import { useEffect } from 'react';
 
 function App() {
+  const [winWidth, setWidth] = useState(window.innerWidth);  //브라우저 넓이
+  console.log(winWidth)
+  const [winHeight, setHeight] = useState(window.innerHeight);  //브라우저 높이
+  const [winOverflow,setWinOverflow] = useState(false)  //오버플로우 체크
+
+  const handleResize = () => {
+    let desktop = document.querySelector('.desktop');
+  
+    setWidth(window.innerWidth);
+    setHeight(window.innerHeight)
+
+    setWinOverflow(winHeight < desktop.offsetHeight ? false: true)
+    console.log(winOverflow)
+  };
+
+
+  useEffect(() => {
+    window.addEventListener("resize", handleResize);
+   
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, );
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React test
-        </a>
-      </header>
+
+ 
+      <Desktop winOverflow={winOverflow}></Desktop>
     </div>
   );
 }
