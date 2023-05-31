@@ -78,22 +78,14 @@
 }
 
 .content-box {
-  position: absolute;
-  top: 5%;
-  left: 10%;
-  width: 80%;
-  height: 80%;
-  background-color: #fff;
-}
-
-.content-box {
   display: flex;
   border-radius: 0.5rem;
   overflow: hidden;
-}
-.content-box > div {
+  position: absolute;
+  width: 100%;
   height: 100%;
 }
+
 .content-box .content-left {
   background-color: #4a4c4f;
   padding-left: 0.6rem;
@@ -101,47 +93,95 @@
 .content-box .content-right {
   background-color: #1d2024;
 }
-.content-btn-box{
-  width:100%;
-  padding: 1.3rem 0;
-
-}
-.content-btn-box ul{
+.content-btn-box {
   width: 100%;
- 
-  display:inline-flex
+  padding: 1.3rem 0;
 }
-.content-btn-box ul li{
-  margin:0 5px;
+.content-btn-box ul {
+  width: 100%;
+
+  display: inline-flex;
 }
-.content-btn-box ul li span{
-  display:inline-block;
-  width:15px;
-  height:15px;
+.content-btn-box ul li {
+  margin: 0 5px;
+}
+.content-btn-box ul li span {
+  display: inline-block;
+  width: 15px;
+  height: 15px;
   border-radius: 15px;
-
 }
-.content-title  span{
-  color:#7D7F82;
-  font-size:0.8rem;
+.content-title span {
+  color: #7d7f82;
+  font-size: 0.8rem;
 }
 
-.content-list li{
+.content-list li {
   padding: 0.5rem 0;
-  padding-left:5px;
+  padding-left: 5px;
+}
+.content-list li span {
+  color: #fff;
+  font-size: 0.9rem;
+}
 
+.red-bt {
+  background-color: #ec6a5e;
 }
-.content-list li span{
-  color:#fff;
-  font-size:0.9rem;
+.yellow-bt {
+  background-color: #f4bf50;
+}
+.green-bt {
+  background-color: #61c554;
+}
+.resizer {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  background-color: blue;
+  
+}
+.resizer .resizer-l {
+  cursor: col-resize;
+  height: 100%;
+  left: 0;
+  width: 5px;
+  z-index: 99;
+  position: absolute;
+  background-color: red;
+}
+.resizer .resizer-r {
+  cursor: col-resize;
+  height: 100%;
+  right: 0;
+  width: 5px;
+  z-index: 99;
+  position: absolute;
+  background-color: red;
+}
+.resizer .resizer-b {
+  cursor: col-resize;
+  height: 100%;
+  bottom: 0;
+  width: 100%;
+  height:5px;
+  z-index: 99;
+  position: absolute;
+  background-color: red;
+}
+.resizer .resizer-t {
+  cursor: col-resize;
+  height: 100%;
+  left: 0;
+  top: 0;
+  width: 100%;
+  bottom:0;
+  height:5px;
+  z-index: 99;
+  position: absolute;
+  background-color: red;
+}
+.window-box {
+  position: absolute;
 }
 
-.red-bt{
-  background-color: #EC6A5E;
-}
-.yellow-bt{
-  background-color: #F4BF50;
-}
-.green-bt{
-  background-color: #61C554;
-}
