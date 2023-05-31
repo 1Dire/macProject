@@ -1,9 +1,14 @@
 import MenuBar from "component/desktop/menu/menuBar";
 import WindowContent from "component/desktop/window/window";
 import Dock from "component/desktop/dock/dock";
+import { useSelector } from "react-redux";
 const Desktop = (props) => {
+  let winOverflow = useSelector((state) => {
+    return state.winOverflow;
+  });
+
   return (
-    <div className={`desktop${props.winOverflow ? "" : " over"}`}>
+    <div className={`desktop${winOverflow ? "" : " over"}`}>
       <div className="window-box">
         <MenuBar />
         <div className="window">

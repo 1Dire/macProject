@@ -139,7 +139,6 @@
   height: 100%;
   position: absolute;
   background-color: blue;
-  
 }
 .resizer .resizer-l {
   cursor: col-resize;
@@ -164,7 +163,7 @@
   height: 100%;
   bottom: 0;
   width: 100%;
-  height:5px;
+  height: 5px;
   z-index: 99;
   position: absolute;
   background-color: red;
@@ -175,13 +174,9 @@
   left: 0;
   top: 0;
   width: 100%;
-  bottom:0;
-  height:5px;
+  bottom: 0;
+  height: 5px;
   z-index: 99;
   position: absolute;
   background-color: red;
 }
-.window-box {
-  position: absolute;
-}
-

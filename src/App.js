@@ -2,12 +2,18 @@ import "./App.css";
 import Desktop from "./component/desktop/desktop";
 import { useState } from "react";
 import { useEffect } from "react";
-
+import { useSelector, useDispatch } from "react-redux";
+import { change } from "./store";
 function App() {
+  let dispatch = useDispatch();
+
+  let winOverflow = useSelector((state) => {
+    return state.winOverflow;
+  });
+
   const [winWidth, setWidth] = useState(window.innerWidth); //브라우저 넓이
 
   const [winHeight, setHeight] = useState(window.innerHeight); //브라우저 높이
-  const [winOverflow, setWinOverflow] = useState(false); //오버플로우 체크
 
   const handleResize = () => {
     let desktop = document.querySelector(".desktop");
@@ -15,7 +21,8 @@ function App() {
     setWidth(window.innerWidth);
     setHeight(window.innerHeight);
 
-    setWinOverflow(winHeight < desktop.offsetHeight ? false : true);
+    dispatch(change(winHeight < desktop.offsetHeight ? false : true));
+    console.log(winHeight < desktop.offsetHeight ? false : true);
   };
 
   useEffect(() => {
@@ -27,7 +34,7 @@ function App() {
   });
   return (
     <div className="App">
-      <Desktop winOverflow={winOverflow}></Desktop>
+      <Desktop></Desktop>
     </div>
   );
 }
