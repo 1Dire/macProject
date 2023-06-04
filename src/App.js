@@ -1,7 +1,7 @@
 import "./App.css";
 import Desktop from "./component/desktop/desktop";
-import { useState } from "react";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
+
 import { useSelector, useDispatch } from "react-redux";
 import { change } from "./store";
 function App() {
@@ -22,7 +22,7 @@ function App() {
     setHeight(window.innerHeight);
 
     dispatch(change(winHeight < desktop.offsetHeight ? false : true));
-    console.log(winHeight < desktop.offsetHeight ? false : true);
+    
   };
 
   useEffect(() => {

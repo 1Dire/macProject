@@ -2,7 +2,7 @@ import MenuBar from "component/desktop/menu/menuBar";
 import WindowContent from "component/desktop/window/window";
 import Dock from "component/desktop/dock/dock";
 import { useSelector } from "react-redux";
-const Desktop = (props) => {
+const Desktop = () => {
   let winOverflow = useSelector((state) => {
     return state.winOverflow;
   });
