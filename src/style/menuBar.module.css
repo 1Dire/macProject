@@ -1,0 +1,18 @@
+.menu-bar {
+  height: 2%;
+  background-color: #fff;
+  opacity: 0.6;
+}
+.menu-bar ul {
+  display: inline-flex;
+  height: 100%;
+}
+.menu-bar ul li {
+  display: inline-flex;
+  padding: 0 10px;
+  height: 100%;
+
+  align-items: center;
+  justify-content: center;
+  cursor: default;
+}

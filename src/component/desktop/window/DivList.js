@@ -3,11 +3,9 @@ import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import { Rnd } from "react-rnd";
 import favorites from "mock/favorites";
 import iCloud from "mock/icloud";
-import styled from "styled-components";
+import styles from "style/divList.module.css"
 
-let iconBtn = styled.span`
-  background: red;
-`;
+
 
 const ResizableDiv = (props) => {
   const ref = useRef(null);
@@ -87,10 +85,10 @@ const ResizableDiv = (props) => {
           onMouseUp={handleContentClick}
           style={{ width: "100%", height: "100%" }}
         >
-          <div className="content-box">
-            <div className="content-left" style={{ width: "100px" }}>
+          <div className={styles['content-box']}>
+            <div className={styles['content-left']} style={{ width: "100px" }}>
               <div
-                className="content-btn-box"
+                className={styles['content-btn-box']}
                 onClick={() => {
                   setMoveMode(false);
                 }}
@@ -104,7 +102,7 @@ const ResizableDiv = (props) => {
                 <ul>
                   <li>
                     <span
-                      className="red-bt"
+                      className={styles['red-bt']}
                       onMouseEnter={() => {
                         setMoveMode(true);
                       }}
@@ -115,7 +113,7 @@ const ResizableDiv = (props) => {
                   </li>
                   <li>
                     <span
-                      className="yellow-bt"
+                      className={styles['yellow-bt']}
                       onMouseEnter={() => {
                         setMoveMode(true);
                       }}
@@ -126,7 +124,7 @@ const ResizableDiv = (props) => {
                   </li>
                   <li>
                     <span
-                      className="green-bt"
+                      className={styles['green-bt']}
                       onMouseEnter={() => {
                         setMoveMode(true);
                       }}
@@ -137,11 +135,11 @@ const ResizableDiv = (props) => {
                   </li>
                 </ul>
               </div>
-              <div className="left-menu-box">
-                <div className="content-title favorites">
+              <div className={styles['left-menu-box']}>
+                <div className={`${styles['content-title']} ${styles.favorites}`}>
                   <span>즐겨찾기</span>
                 </div>
-                <ul className="content-list">
+                <ul className={styles['content-list']}>
                   {favorites.map(function (a, i) {
                     return (
                       <li key={i}>
@@ -150,10 +148,10 @@ const ResizableDiv = (props) => {
                     );
                   })}
                 </ul>
-                <div className="content-title favorites">
+                <div className={`${styles['content-title']} ${styles.favorites}`}>
                   <span>iCloud</span>
                 </div>
-                <ul className="content-list">
+                <ul className={`${styles['content-list']}`}>
                   {iCloud.map(function (a, i) {
                     return (
                       <li key={i}>
@@ -164,9 +162,9 @@ const ResizableDiv = (props) => {
                 </ul>
               </div>
             </div>
-            <div className="content-right" style={{ width: "90%" }}>
+            <div className={styles['content-right']} style={{ width: "90%" }}>
               <div
-                className="top-bar"
+                className={styles['top-bar']}
                 onClick={() => {
                   setMoveMode(false);
                 }}
@@ -178,7 +176,7 @@ const ResizableDiv = (props) => {
                 }}
               >
                 <ul>
-                  <li className="top-bar-icon">
+                  <li className={styles['top-bar-icon']}>
                     <div>
                       <span onMouseEnter={() => {
                         setMoveMode(true);
@@ -199,7 +197,7 @@ const ResizableDiv = (props) => {
                       </span>
                     </div>
                   </li>
-                  <li className="title"><span>title</span></li>
+                  <li className={styles.title}><span>title</span></li>
                   <li>3</li>
                 </ul>
               </div>

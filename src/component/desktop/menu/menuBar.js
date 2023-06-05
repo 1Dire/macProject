@@ -1,6 +1,7 @@
+import styles from 'style/menuBar.module.css'
 const MenuBar = () => {
   return (
-    <div className="menu-bar">
+    <div className={styles['menu-bar']}>
       <ul>
         <li>
           <span>아이콘</span>
