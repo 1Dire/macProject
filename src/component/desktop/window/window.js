@@ -7,18 +7,20 @@ const WindowContent = () => {
   const [windowList, setWindowList] = useState([...mockWindowList]);
   const [contentWidth, setContentWidth] = useState(0);
   const [contentHeight, setContentHeight] = useState(0);
-
+  
   const ref = useRef(null);
-
+  let length = windowList.length
   useEffect(() => {
-
-
     return () => {};
   }, []);
 
   return (
     <div id="content" className="content" ref={ref}>
-      {windowList.map(function (value, i) {
+      {
+      windowList.map(function (value, i) {
+    
+        let zIndex = length
+        length - 1
         let id = value.id;
         let name = value.name;
         let width = value.width;
@@ -27,6 +29,7 @@ const WindowContent = () => {
         let positionY = value.position.y;
         return (
           <ResizableDiv
+            zIndex={zIndex}
             key={i}
             id={id}
             name={name}
@@ -34,7 +37,6 @@ const WindowContent = () => {
             height={height}
             positionX={postionX}
             positionY={positionY}
-
           ></ResizableDiv>
         );
       })}

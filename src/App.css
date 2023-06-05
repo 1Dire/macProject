@@ -97,7 +97,9 @@
 }
 .content-btn-box {
   width: 100%;
-  padding: 1.3rem 0;
+  height: 50px;
+  display: flex;
+  align-items: center;
 }
 .content-btn-box ul {
   width: 100%;
@@ -136,52 +138,28 @@
 .green-bt {
   background-color: #61c554;
 }
-.resizer {
+.top-bar {
   width: 100%;
-  height: 100%;
-  position: absolute;
+  background-color: #343638;
+  height: 50px;
 }
-.resizer .resizer-l {
-  cursor: col-resize;
+.top-bar ul {
+  display: flex;
+  background-color: blue;
   height: 100%;
-  left: 0;
-  width: 5px;
-  z-index: 99;
-  position: absolute;
 }
-.resizer .resizer-r {
-  cursor: col-resize;
+.top-bar ul li {
+  display: flex;
+  font-size: 1.5rem;
+  align-items: center;
+}
+.top-bar .top-bar-icon {
+  background-color: red;
   height: 100%;
-  right: 0;
-  width: 5px;
-  z-index: 99;
-  position: absolute;
+  margin: 0 10px;
 }
-.resizer .resizer-b {
-  cursor: row-resize;
-  height: 100%;
-  bottom: 0;
-  width: 100%;
-  height: 5px;
-  z-index: 99;
-  position: absolute;
-}
-.resizer .resizer-t {
-  cursor: row-resize;
-  height: 100%;
-  left: 0;
-  top: 0;
-  width: 100%;
-  bottom: 0;
-  height: 5px;
-  z-index: 99;
-  position: absolute;
-}
+.top-bar .top-bar-icon span {
+  display:inline-block;
 
-.content-right .bar{
-  width: 100%;
-  padding: 1.3rem 0;
-  background-color:rgba(52, 54, 56, 1);
-  color:#fff;
-  cursor: grab;
+  background-color: orange;
 }

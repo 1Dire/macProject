@@ -7,7 +7,7 @@ const windowList =[
         position:{
             x:'20%',
             y:'30%  '
-        }
+        },
     },
     {
         id:2,
@@ -18,6 +18,7 @@ const windowList =[
             x:'10%',
             y:'5%'
         }
+        ,
     }
 ]
 
