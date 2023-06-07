@@ -3,9 +3,7 @@ import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import { Rnd } from "react-rnd";
 import favorites from "mock/favorites";
 import iCloud from "mock/icloud";
-import styles from "style/divList.module.css"
-
-
+import styles from "style/divList.module.css";
 
 const ResizableDiv = (props) => {
   const ref = useRef(null);
@@ -85,10 +83,10 @@ const ResizableDiv = (props) => {
           onMouseUp={handleContentClick}
           style={{ width: "100%", height: "100%" }}
         >
-          <div className={styles['content-box']}>
-            <div className={styles['content-left']} style={{ width: "100px" }}>
+          <div className={styles["content-box"]}>
+            <div className={styles["content-left"]} style={{ width: "100px" }}>
               <div
-                className={styles['content-btn-box']}
+                className={styles["content-btn-box"]}
                 onClick={() => {
                   setMoveMode(false);
                 }}
@@ -102,7 +100,7 @@ const ResizableDiv = (props) => {
                 <ul>
                   <li>
                     <span
-                      className={styles['red-bt']}
+                      className={styles["red-bt"]}
                       onMouseEnter={() => {
                         setMoveMode(true);
                       }}
@@ -113,7 +111,7 @@ const ResizableDiv = (props) => {
                   </li>
                   <li>
                     <span
-                      className={styles['yellow-bt']}
+                      className={styles["yellow-bt"]}
                       onMouseEnter={() => {
                         setMoveMode(true);
                       }}
@@ -124,7 +122,7 @@ const ResizableDiv = (props) => {
                   </li>
                   <li>
                     <span
-                      className={styles['green-bt']}
+                      className={styles["green-bt"]}
                       onMouseEnter={() => {
                         setMoveMode(true);
                       }}
@@ -135,11 +133,13 @@ const ResizableDiv = (props) => {
                   </li>
                 </ul>
               </div>
-              <div className={styles['left-menu-box']}>
-                <div className={`${styles['content-title']} ${styles.favorites}`}>
+              <div className={styles["left-menu-box"]}>
+                <div
+                  className={`${styles["content-title"]} ${styles.favorites}`}
+                >
                   <span>즐겨찾기</span>
                 </div>
-                <ul className={styles['content-list']}>
+                <ul className={styles["content-list"]}>
                   {favorites.map(function (a, i) {
                     return (
                       <li key={i}>
@@ -148,10 +148,12 @@ const ResizableDiv = (props) => {
                     );
                   })}
                 </ul>
-                <div className={`${styles['content-title']} ${styles.favorites}`}>
+                <div
+                  className={`${styles["content-title"]} ${styles.favorites}`}
+                >
                   <span>iCloud</span>
                 </div>
-                <ul className={`${styles['content-list']}`}>
+                <ul className={`${styles["content-list"]}`}>
                   {iCloud.map(function (a, i) {
                     return (
                       <li key={i}>
@@ -162,9 +164,9 @@ const ResizableDiv = (props) => {
                 </ul>
               </div>
             </div>
-            <div className={styles['content-right']} style={{ width: "90%" }}>
+            <div className={styles["content-right"]} style={{ width: "90%" }}>
               <div
-                className={styles['top-bar']}
+                className={styles["top-bar"]}
                 onClick={() => {
                   setMoveMode(false);
                 }}
@@ -176,28 +178,34 @@ const ResizableDiv = (props) => {
                 }}
               >
                 <ul>
-                  <li className={styles['top-bar-icon']}>
+                  <li className={styles["top-bar-icon"]}>
                     <div>
-                      <span onMouseEnter={() => {
-                        setMoveMode(true);
-                      }}
-                      onMouseLeave={() => {
-                        setMoveMode(false);
-                      }}>
+                      <span
+                        onMouseEnter={() => {
+                          setMoveMode(true);
+                        }}
+                        onMouseLeave={() => {
+                          setMoveMode(false);
+                        }}
+                      >
                         <FiChevronLeft></FiChevronLeft>
                       </span>
 
-                      <span onMouseEnter={() => {
-                        setMoveMode(true);
-                      }}
-                      onMouseLeave={() => {
-                        setMoveMode(false);
-                      }}>  
+                      <span
+                        onMouseEnter={() => {
+                          setMoveMode(true);
+                        }}
+                        onMouseLeave={() => {
+                          setMoveMode(false);
+                        }}
+                      >
                         <FiChevronRight></FiChevronRight>
                       </span>
                     </div>
                   </li>
-                  <li className={styles.title}><span>title</span></li>
+                  <li className={styles.title}>
+                    <span>title</span>
+                  </li>
                   <li>3</li>
                 </ul>
               </div>

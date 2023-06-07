@@ -1,30 +1,21 @@
 import { useState, useEffect, useRef } from "react";
-// import { HiChevronLeft, HiChevronRight } from "react-icons/hi2";
 import ResizableDiv from "./DivList";
+//mock
 import mockWindowList from "mock/windowList";
-import { useSelector, useDispatch } from "react-redux";
-import { openWindowListAdd } from "store";
-import styles from 'style/window.module.css'
+//css
+import styles from "style/window.module.css";
 
 const WindowContent = () => {
-  let dispatch = useDispatch();
-  let openWindowList = useSelector((state) => {
-    return state.openWindowList;
-  });
-  const test = () => {
-    console.log('전')
-    dispatch(openWindowListAdd("d"));
-  };
+  //state
   const [windowList, setWindowList] = useState([...mockWindowList]);
-
-  const ref = useRef(null);
   let length = windowList.length;
+  //useEffect
   useEffect(() => {
     return () => {};
   }, []);
 
   return (
-    <div id="content" className={styles.content} ref={ref} onClick={test}>
+    <div id="content" className={styles.content}>
       {windowList.map(function (value, i) {
         let zIndex = length;
         length - 1;
