@@ -1,0 +1,21 @@
+.div-animation-enter {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  
+  .div-animation-enter-active {
+    transform: translateY(0);
+    opacity: 1;
+    transition: transform 0.5s ease, opacity 0.5s ease;
+  }
+  
+  .div-animation-exit {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  
+  .div-animation-exit-active {
+    transform: translateY(100%);
+    opacity: 0;
+    transition: transform 0.5s ease, opacity 0.5s ease;
+  }

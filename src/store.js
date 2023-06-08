@@ -1,5 +1,10 @@
 import { configureStore, createSlice } from "@reduxjs/toolkit";
 
+//목업모드
+let mockMode = createSlice({
+  name: "mockMoe",
+  initialState: true,
+});
 let winOverflow = createSlice({
   name: "winOverflow",
   initialState: false,
@@ -9,6 +14,7 @@ let winOverflow = createSlice({
     },
   },
 });
+
 let openWindowList = createSlice({
   name: "openWindowList",
   initialState: [],
@@ -16,16 +22,22 @@ let openWindowList = createSlice({
     openWindowListAdd(state, data) {
       let copy = [...state];
       copy.push(data.payload);
-      console.log('copy',copy)
+      return copy;
+    },
+    openWindowListRemove(state, data) {
+      let copy = [...state];
+      copy.splice(data.payload, 1);
       return copy;
     },
   },
 });
 export let { change } = winOverflow.actions;
 export let { openWindowListAdd } = openWindowList.actions;
+export let { openWindowListRemove } = openWindowList.actions;
 export default configureStore({
   reducer: {
     winOverflow: winOverflow.reducer,
     openWindowList: openWindowList.reducer,
+    mockMode: mockMode.reducer,
   },
 });

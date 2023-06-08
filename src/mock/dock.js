@@ -2,7 +2,9 @@ const dock = [
     {
         file_name: "Finder",
         icon: "finder",
-        ord: 1
+        name:"Finder",
+        ord: 1,
+        display:'explorer'
     },
     
   ];

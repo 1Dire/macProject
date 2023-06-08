@@ -4,15 +4,37 @@ import ResizableDiv from "./DivList";
 import mockWindowList from "mock/windowList";
 //css
 import styles from "style/window.module.css";
+import { useSelector } from "react-redux";
 
 const WindowContent = () => {
+  let openWindowList = useSelector((state) => {
+    return state.openWindowList;
+  });
+  let mockMode = useSelector((state) => {
+    return state.mockMode;
+  }); // 목업 모드
   //state
-  const [windowList, setWindowList] = useState([...mockWindowList]);
+
+  const [windowList, setWindowList] = useState([]);
   let length = windowList.length;
   //useEffect
   useEffect(() => {
+    let array = [];
+    console.log("mockMode", mockMode);
+    if (mockMode) {
+      openWindowList.forEach((i) => {
+        mockWindowList.forEach((j) => {
+          if (i.name === j.name) {
+            array.push(j)
+          }
+        });
+      });
+      setWindowList(array )
+    } else {
+    }
+
     return () => {};
-  }, []);
+  }, [openWindowList]);
 
   return (
     <div id="content" className={styles.content}>
@@ -26,6 +48,7 @@ const WindowContent = () => {
         let postionX = value.position.x;
         let positionY = value.position.y;
         return (
+        
           <ResizableDiv
             zIndex={zIndex}
             key={i}

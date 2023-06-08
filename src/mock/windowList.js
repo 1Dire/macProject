@@ -1,11 +1,11 @@
 const windowList =[
     {
         id:1,
-        name:'window',
-        width:'50%',
-        height:'50%',
+        name:'Finder',
+        width:'40%',
+        height:'45%',
         position:{
-            x:'20%',
+            x:'30%',
             y:'30%  '
         },
     },
