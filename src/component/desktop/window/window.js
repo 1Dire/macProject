@@ -21,11 +21,11 @@ const WindowContent = () => {
     let array = [];
     if (mockMode) {
       openWindowList.forEach((i) => {
-
         mockWindowList.forEach((j) => {
           if (i.name === j.name) {
             j.id = i.id;
-            j.show = i.show
+            j.show = i.show;
+            j.zIndex = i.zIndex;
             array.push(j);
           }
         });
@@ -40,16 +40,14 @@ const WindowContent = () => {
   return (
     <div id="content" className={styles.content}>
       {windowList.map(function (value, i) {
-        console.log('value',value)
-        let zIndex = length;
-        length - 1;
         let id = value.id;
         let name = value.name;
         let width = value.width;
         let height = value.height;
         let postionX = value.position.x;
         let positionY = value.position.y;
-        let show = value.show
+        let show = value.show;
+        let zIndex = value.zIndex;
         let render;
         if (name === "Finder") {
           render = (
@@ -63,6 +61,7 @@ const WindowContent = () => {
               positionY={positionY}
               show={show}
             ></ResizableDiv>
+            
           );
         }
         return <div key={i}>{render}</div>;

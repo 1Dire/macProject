@@ -5,7 +5,11 @@ import favorites from "mock/favorites";
 import iCloud from "mock/icloud";
 import styles from "style/divList.module.css";
 import { useSelector, useDispatch } from "react-redux";
-import { openWindowListRemove, openWindowShowChange } from "store";
+import {
+  openWindowListRemove,
+  openWindowShowChange,
+  zIndexChange,
+} from "store";
 
 const ResizableDiv = (props) => {
   let openWindowList = useSelector((state) => {
@@ -25,9 +29,9 @@ const ResizableDiv = (props) => {
   const [moveMode, setMoveMode] = useState(true);
   const [position, setPosition] = useState({ x: 0, y: 0 }); // 초기 위치
   const [showComponent, setShowComponent] = useState(false);
-useEffect(()=>{
-  setIsMinimized(props.show)
-},[props]);
+  useEffect(() => {
+    setIsMinimized(props.show);
+  }, [props]);
   useEffect(() => {
     const resizeEle = ref.current;
     const styled = window.getComputedStyle(resizeEle);
@@ -50,8 +54,18 @@ useEffect(()=>{
 
   const handleBoxClick = () => {
     // 박스를 클릭한 경우, 원하는 동작을 수행
-    console.log('dd')
-    console.log('openWindowList',openWindowList)
+    let topZindex = openWindowList.reduce((prev, current) => {
+      return prev.zIndex > current.zIndex ? prev : current;
+    });
+
+    if (topZindex.id !== id) {
+      let param = {
+        index: openWindowList.findIndex((item) => item.id === id),
+        topZindex: topZindex.zIndex + 1,
+      };
+
+      dispatch(zIndexChange(param));
+    }
   };
 
   const handleResizeStop = (e, direction, ref, delta, position) => {
@@ -64,15 +78,11 @@ useEffect(()=>{
 
   const handleResize = (e, direction, ref, delta, position) => {};
   const closeWindow = () => {
-    let id = props.id;
-
     let index = openWindowList.findIndex((item) => item.id === id);
     // //닫기버튼 클릭시
-
     dispatch(openWindowListRemove(index));
   };
   const minimizeBt = () => {
-    let id = props.id;
     let index = openWindowList.findIndex((item) => item.id === id);
     dispatch(openWindowShowChange(index));
   };
@@ -85,6 +95,7 @@ useEffect(()=>{
         position: "absolute",
         width: "100%",
         height: "100%",
+        zIndex: zIndex,
       }}
     >
       {showComponent && (

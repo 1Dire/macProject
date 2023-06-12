@@ -1,3 +1,9 @@
+이상우의 포트폴리오
+
+설명: 기본 mac 인터페이스를 참고하여  디자인하고 컨텐츠로 블로그 글쓰듯이 볼수있게 만들었습니다.
+
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

@@ -3,7 +3,11 @@ import axios from "axios";
 import dock from "mock/dock";
 import styles from "style/dock.module.css";
 import { useSelector, useDispatch } from "react-redux";
-import { openWindowListAdd, openWindowListRemove ,openWindowShowChange} from "store";
+import {
+  openWindowListAdd,
+  openWindowListRemove,
+  openWindowShowChange,
+} from "store";
 const Dock = () => {
   let mockMode = useSelector((state) => {
     return state.mockMode;
@@ -22,6 +26,16 @@ const Dock = () => {
     if (index < 0) {
       //배열내 이미존재하면
       object.id = openWindowList.length + 1;
+      object.show = true;
+      if (openWindowList.length === 0) {
+        object.zIndex = 1;
+      } else {
+        let topZindex = openWindowList.reduce((prev, current) => {
+          return prev.zIndex > current.zIndex ? prev : current;
+        });
+        object.zIndex = topZindex.zIndex + 1;
+      }
+
       dispatch(openWindowListAdd(object));
     } else {
       dispatch(openWindowShowChange(index));
@@ -68,7 +82,13 @@ const Dock = () => {
             </li>
           );
         })}
-        <li onClick={() =>{console.log(openWindowList)}}>bt</li>
+        <li
+          onClick={() => {
+            console.log(openWindowList);
+          }}
+        >
+          bt
+        </li>
       </ul>
     </div>
   );

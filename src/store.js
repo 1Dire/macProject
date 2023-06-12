@@ -1,5 +1,5 @@
 import { configureStore, createSlice } from "@reduxjs/toolkit";
-import produce from 'immer';
+import produce from "immer";
 //목업모드
 let mockMode = createSlice({
   name: "mockMoe",
@@ -21,8 +21,6 @@ let openWindowList = createSlice({
   reducers: {
     openWindowListAdd(state, data) {
       return produce(state, (draft) => {
-        data.payload.show = true
-        console.log('draft',draft)
         draft.push(data.payload);
       });
     },
@@ -31,35 +29,49 @@ let openWindowList = createSlice({
         draft.splice(data.payload, 1);
       });
     },
-    openWindowShowChange(state,data){
+    openWindowShowChange(state, data) {
       const index = data.payload;
       return produce(state, (draft) => {
         draft[index].show = !draft[index].show;
       });
-    }
+    },
+    openWindowZindexChange(state, data) {
+      const index = data.payload;
+      return produce(state, (draft) => {
+        draft[index].show = !draft[index].show;
+      });
+    },
+    zIndexChange(state, data) {
+      const payload = data.payload;
+
+      return produce(state, (draft) => {
+        draft[payload.index].zIndex = payload.topZindex;
+      });
+    },
   },
 });
 
 //포커스 중인 윈도우
 let focusWindow = createSlice({
-  name:"focusWindow",
+  name: "focusWindow",
   initialState: {},
-  reducers:{
-    focusChange(state,data){
-      return {} 
-    }
-  }
-})
+  reducers: {
+    focusChange(state, data) {
+      return {};
+    },
+  },
+});
 export let { change } = winOverflow.actions;
 export let { openWindowListAdd } = openWindowList.actions;
 export let { openWindowListRemove } = openWindowList.actions;
-export let {openWindowShowChange} = openWindowList.actions
-export let {focusChange} =  focusWindow.actions
+export let { openWindowShowChange } = openWindowList.actions;
+export let { focusChange } = focusWindow.actions;
+export let { zIndexChange } = openWindowList.actions;
 export default configureStore({
   reducer: {
     winOverflow: winOverflow.reducer,
     openWindowList: openWindowList.reducer,
     mockMode: mockMode.reducer,
-    focusWindow: focusWindow.reducer
+    focusWindow: focusWindow.reducer,
   },
 });
