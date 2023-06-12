@@ -3,7 +3,7 @@ import axios from "axios";
 import dock from "mock/dock";
 import styles from "style/dock.module.css";
 import { useSelector, useDispatch } from "react-redux";
-import { openWindowListAdd, openWindowListRemove } from "store";
+import { openWindowListAdd, openWindowListRemove ,openWindowShowChange} from "store";
 const Dock = () => {
   let mockMode = useSelector((state) => {
     return state.mockMode;
@@ -17,12 +17,14 @@ const Dock = () => {
   const [loding, setLoading] = useState(false);
 
   function iconClickEvent(value) {
-    let index = openWindowList.indexOf(value);
-    if (index) {
+    let object = { ...value };
+    let index = openWindowList.findIndex((item) => item.name === object.name);
+    if (index < 0) {
       //배열내 이미존재하면
-      dispatch(openWindowListAdd(value));
+      object.id = openWindowList.length + 1;
+      dispatch(openWindowListAdd(object));
     } else {
-      dispatch(openWindowListRemove(index));
+      dispatch(openWindowShowChange(index));
     }
   }
   useEffect(() => {
@@ -66,6 +68,7 @@ const Dock = () => {
             </li>
           );
         })}
+        <li onClick={() =>{console.log(openWindowList)}}>bt</li>
       </ul>
     </div>
   );

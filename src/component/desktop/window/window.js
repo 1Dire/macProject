@@ -14,22 +14,23 @@ const WindowContent = () => {
     return state.mockMode;
   }); // 목업 모드
   //state
-
   const [windowList, setWindowList] = useState([]);
-  let length = windowList.length;
+
   //useEffect
   useEffect(() => {
     let array = [];
-    console.log("mockMode", mockMode);
     if (mockMode) {
       openWindowList.forEach((i) => {
+
         mockWindowList.forEach((j) => {
           if (i.name === j.name) {
-            array.push(j)
+            j.id = i.id;
+            j.show = i.show
+            array.push(j);
           }
         });
       });
-      setWindowList(array )
+      setWindowList(array);
     } else {
     }
 
@@ -39,6 +40,7 @@ const WindowContent = () => {
   return (
     <div id="content" className={styles.content}>
       {windowList.map(function (value, i) {
+        console.log('value',value)
         let zIndex = length;
         length - 1;
         let id = value.id;
@@ -47,19 +49,23 @@ const WindowContent = () => {
         let height = value.height;
         let postionX = value.position.x;
         let positionY = value.position.y;
-        return (
-        
-          <ResizableDiv
-            zIndex={zIndex}
-            key={i}
-            id={id}
-            name={name}
-            width={width}
-            height={height}
-            positionX={postionX}
-            positionY={positionY}
-          ></ResizableDiv>
-        );
+        let show = value.show
+        let render;
+        if (name === "Finder") {
+          render = (
+            <ResizableDiv
+              zIndex={zIndex}
+              id={id}
+              name={name}
+              width={width}
+              height={height}
+              positionX={postionX}
+              positionY={positionY}
+              show={show}
+            ></ResizableDiv>
+          );
+        }
+        return <div key={i}>{render}</div>;
       })}
     </div>
   );

@@ -4,9 +4,14 @@ import { Rnd } from "react-rnd";
 import favorites from "mock/favorites";
 import iCloud from "mock/icloud";
 import styles from "style/divList.module.css";
+import { useSelector, useDispatch } from "react-redux";
+import { openWindowListRemove, openWindowShowChange } from "store";
 
-import { useSelector } from "react-redux";
 const ResizableDiv = (props) => {
+  let openWindowList = useSelector((state) => {
+    return state.openWindowList;
+  });
+  let dispatch = useDispatch();
   const ref = useRef(null);
   const [id] = useState(props.id);
   const [size, setSize] = useState({
@@ -16,10 +21,13 @@ const ResizableDiv = (props) => {
   const [zIndex, setIndex] = useState(props.zIndex);
   const [positionX] = useState(props.positionX);
   const [positionY] = useState(props.positionY);
+  const [isMinimized, setIsMinimized] = useState(props.show); //최소화
   const [moveMode, setMoveMode] = useState(true);
   const [position, setPosition] = useState({ x: 0, y: 0 }); // 초기 위치
   const [showComponent, setShowComponent] = useState(false);
-  console.log("props", props);
+useEffect(()=>{
+  setIsMinimized(props.show)
+},[props]);
   useEffect(() => {
     const resizeEle = ref.current;
     const styled = window.getComputedStyle(resizeEle);
@@ -38,13 +46,12 @@ const ResizableDiv = (props) => {
   const handleContentClick = (e) => {
     e.stopPropagation();
     // 내부 컨텐츠를 클릭한 경우, 원하는 동작을 수행
-
-    console.log("Content Clicked");
   };
 
   const handleBoxClick = () => {
-    console.log("handleBoxClick");
     // 박스를 클릭한 경우, 원하는 동작을 수행
+    console.log('dd')
+    console.log('openWindowList',openWindowList)
   };
 
   const handleResizeStop = (e, direction, ref, delta, position) => {
@@ -56,11 +63,24 @@ const ResizableDiv = (props) => {
   };
 
   const handleResize = (e, direction, ref, delta, position) => {};
+  const closeWindow = () => {
+    let id = props.id;
 
+    let index = openWindowList.findIndex((item) => item.id === id);
+    // //닫기버튼 클릭시
+
+    dispatch(openWindowListRemove(index));
+  };
+  const minimizeBt = () => {
+    let id = props.id;
+    let index = openWindowList.findIndex((item) => item.id === id);
+    dispatch(openWindowShowChange(index));
+  };
   return (
     <div
       ref={ref}
       id={"rnd_" + id}
+      className={`${styles.window} ${isMinimized ? "" : styles.minimized}`}
       style={{
         position: "absolute",
         width: "100%",
@@ -77,11 +97,11 @@ const ResizableDiv = (props) => {
           position={position}
           disableDragging={moveMode}
           onDragStop={(e, d) => {
-            console.log("e");
             setPosition({ x: d.x, y: d.y });
           }}
           onResizeStop={handleResizeStop}
           onResize={handleResize}
+          onClick={handleBoxClick}
         >
           <div
             onMouseUp={handleContentClick}
@@ -114,6 +134,9 @@ const ResizableDiv = (props) => {
                         onMouseLeave={() => {
                           setMoveMode(false);
                         }}
+                        onClick={() => {
+                          closeWindow();
+                        }}
                       ></span>
                     </li>
                     <li>
@@ -124,6 +147,9 @@ const ResizableDiv = (props) => {
                         }}
                         onMouseLeave={() => {
                           setMoveMode(false);
+                        }}
+                        onClick={() => {
+                          minimizeBt();
                         }}
                       ></span>
                     </li>
@@ -213,7 +239,7 @@ const ResizableDiv = (props) => {
                     <li className={styles.title}>
                       <span>title</span>
                     </li>
-                    <li>3</li>
+                    <li>3ㅇ</li>
                   </ul>
                 </div>
               </div>
