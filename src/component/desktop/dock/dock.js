@@ -7,6 +7,7 @@ import {
   openWindowListAdd,
   openWindowListRemove,
   openWindowShowChange,
+  focusChange,
 } from "store";
 const Dock = () => {
   let mockMode = useSelector((state) => {
@@ -15,6 +16,8 @@ const Dock = () => {
   let openWindowList = useSelector((state) => {
     return state.openWindowList;
   });
+
+
   let dispatch = useDispatch();
 
   const [dockList, setDockList] = useState([...dock]);
@@ -62,6 +65,17 @@ const Dock = () => {
         });
     }
   }, []); // 의존성 배열을 빈 배열로 설정하여 한 번만 실행되도록 함
+  useEffect(() => {
+    if (openWindowList) {
+      let topZindex = openWindowList.reduce(
+        (prev, current) => {
+          return prev.zIndex > current.zIndex ? prev : current;
+        },
+        { zIndex: -Infinity }
+      ); // 초기 값으로 { zIndex: -Infinity }를 제공
+      dispatch(focusChange(topZindex));
+    }
+  }, [openWindowList]);
   return (
     <div className={styles.dock}>
       <ul>

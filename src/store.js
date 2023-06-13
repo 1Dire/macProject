@@ -43,7 +43,6 @@ let openWindowList = createSlice({
     },
     zIndexChange(state, data) {
       const payload = data.payload;
-
       return produce(state, (draft) => {
         draft[payload.index].zIndex = payload.topZindex;
       });
@@ -57,7 +56,8 @@ let focusWindow = createSlice({
   initialState: {},
   reducers: {
     focusChange(state, data) {
-      return {};
+      console.log('data',data.payload)
+      return data.payload;
     },
   },
 });
