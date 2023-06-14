@@ -56,7 +56,6 @@ let focusWindow = createSlice({
   initialState: {},
   reducers: {
     focusChange(state, data) {
-      console.log('data',data.payload)
       return data.payload;
     },
   },
