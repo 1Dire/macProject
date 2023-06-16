@@ -17,6 +17,17 @@ const MenuBar = () => {
   const handleMenuAction = (actionType) => {
     console.log("actionType", actionType);
   };
+  const menuOpen = (clickMenu) => {
+    console.log("click", clickMenu);
+    let copy = { ...menu };
+    copy.subMenu.forEach((element) => {
+      if (element.name === clickMenu.name) {
+        element.show = !element.show;
+      }
+    });
+    console.log("copy", copy);
+    setMenu(copy);
+  };
   useEffect(() => {
     if (focusWindow) {
       let selectMenu = mockMenu.items.find(function (obj) {
@@ -38,6 +49,7 @@ const MenuBar = () => {
     //   setMenu({})
     // }
   }, [openWindowList]);
+
   return (
     <div className={styles["menu-bar"]}>
       <ul>
@@ -46,33 +58,48 @@ const MenuBar = () => {
         </li>
         {menu && (
           <>
-            <li>
-              <span>{menu.name}</span>
+            <li className={styles["menu"]}>
+              <div className={styles["menu-title"]}>
+                <span>{menu.name}</span>
+              </div>
+
               {menu.subMenu &&
                 menu.subMenu.map(function (value, i) {
                   return (
-                    <React.Fragment key={i}>
-                      <span>{value.name}</span>
+                    <div
+                      key={i}
+                      id={`menu-${i + 1}`}
+                      className={styles["subMenu"]}
+                    >
+                      <div
+                        onClick={() => {
+                          menuOpen(value);
+                        }}
+                        className={styles["sub-title"]}
+                      >
+                        <span>{value.name}</span>
+                      </div>
                       {value.subMenu && (
-                        <ul key={`list-${i}`}>
+                        <ul
+                          key={`list-${i}`}
+                          className={value.show ? `${styles.open}` : ""}
+                        >
                           {value.subMenu.map(function (value, j) {
                             return (
-                              <React.Fragment key={j}>
-                                <li
-                                  onClick={() => handleMenuAction(value.action)}
-                                >
-                                  {value.name}
-                                </li>
-                              </React.Fragment>
+                              <li
+                                key={j}
+                                onClick={() => handleMenuAction(value.action)}
+                              >
+                                {value.name}
+                              </li>
                             );
                           })}
                         </ul>
                       )}
-                    </React.Fragment>
+                    </div>
                   );
                 })}
             </li>
-           
           </>
         )}
       </ul>

@@ -1,18 +1,55 @@
 .menu-bar {
+  position: relative;
+  z-index: 99;
   height: 2%;
-  background-color: #fff;
-  opacity: 0.6;
+  background-color: rgba(255, 255, 255, 0.6);
 }
-.menu-bar ul {
+.menu-bar > ul {
   display: inline-flex;
   height: 100%;
 }
-.menu-bar ul li {
-  display: inline-flex;
-  padding: 0 10px;
-  height: 100%;
 
+.menu {
+  position: relative;
+  display: flex;
+}
+
+.menu-title {
+  height: 100%;
+  display: flex;
   align-items: center;
-  justify-content: center;
-  cursor: default;
+}
+.menu-title span {
+  padding: 0 5px;
+}
+.menu-title ul {
+  padding: 50px;
+}
+.sub-title {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+.sub-title span {
+  padding: 0 5px;
+}
+
+.subMenu {
+  position: relative;
+}
+.subMenu > ul {
+  position: absolute;
+  min-width: 200px;
+  padding: 2px 5px;
+  background-color: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  border-radius: 5px;
+  display: none;
+}
+.subMenu > ul.open {
+  display: block ;
+}
+.subMenu > ul > li {
+  padding: 5px;
 }
