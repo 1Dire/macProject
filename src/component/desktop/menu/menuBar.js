@@ -1,55 +1,69 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styles from "style/menuBar.module.css";
-import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { focusChange } from "store";
+import { focusChange, openWindowListRemove, openWindowShowChange } from "store";
 import mockMenu from "mock/menu";
+
 const MenuBar = () => {
-  let focusWindow = useSelector((state) => {
-    return state.focusWindow;
-  }); // 목업 모드
-  let openWindowList = useSelector((state) => {
-    return state.openWindowList;
-  }); // 목업 모드
-  let dispatch = useDispatch();
+  const focusWindow = useSelector((state) => state.focusWindow);
+  const openWindowList = useSelector((state) => state.openWindowList);
+  const dispatch = useDispatch();
   const [menu, setMenu] = useState(null);
 
-  const handleMenuAction = (actionType) => {
-    console.log("actionType", actionType);
+  const handleMenuAction = (sub, value) => {
+    const index = openWindowList.findIndex(
+      (item) => item.name === focusWindow.name
+    );
+
+    if (sub.action === "close") {
+      dispatch(openWindowListRemove(index));
+    }
+    if (sub.action === "minimize") {
+      dispatch(openWindowShowChange(index));
+    }
+
+    const copy = { ...menu };
+    copy.subMenu.forEach((element) => {
+      if (element.name === value.name) {
+        element.show = false;
+      }
+    });
+    setMenu(copy);
   };
+
   const menuOpen = (clickMenu) => {
-    console.log("click", clickMenu);
-    let copy = { ...menu };
+    const copy = { ...menu };
     copy.subMenu.forEach((element) => {
       if (element.name === clickMenu.name) {
         element.show = !element.show;
       }
     });
-    console.log("copy", copy);
     setMenu(copy);
   };
+
   useEffect(() => {
     if (focusWindow) {
-      let selectMenu = mockMenu.items.find(function (obj) {
-        return obj.name === focusWindow.name;
-      });
+      const selectMenu = mockMenu.items.find(
+        (obj) => obj.name === focusWindow.name
+      );
       setMenu(selectMenu);
     } else {
       setMenu(null);
     }
   }, [focusWindow]);
+
   useEffect(() => {
-    let find = openWindowList.find((item) => item.show === true);
+    const find = openWindowList.find((item) => item.show === true);
     if (openWindowList.length === 0 || find === undefined) {
       dispatch(focusChange(null));
+      if (menu) {
+        menu.subMenu.forEach((element) => {
+          element.show = false;
+        });
+      }
     }
-
-    // if(!openWindowList.find(item => item.show === true)){
-
-    //   setMenu({})
-    // }
   }, [openWindowList]);
-
+  useEffect(() => {}, [menu]);
   return (
     <div className={styles["menu-bar"]}>
       <ul>
@@ -64,7 +78,7 @@ const MenuBar = () => {
               </div>
 
               {menu.subMenu &&
-                menu.subMenu.map(function (value, i) {
+                menu.subMenu.map((value, i) => {
                   return (
                     <div
                       key={i}
@@ -82,15 +96,15 @@ const MenuBar = () => {
                       {value.subMenu && (
                         <ul
                           key={`list-${i}`}
-                          className={value.show ? `${styles.open}` : ""}
+                          className={value.show ? styles.open : ""}
                         >
-                          {value.subMenu.map(function (value, j) {
+                          {value.subMenu.map((sub, j) => {
                             return (
                               <li
                                 key={j}
-                                onClick={() => handleMenuAction(value.action)}
+                                onClick={() => handleMenuAction(sub, value)}
                               >
-                                {value.name}
+                                {sub.name}
                               </li>
                             );
                           })}

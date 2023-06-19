@@ -24,7 +24,7 @@ const mockMenu = {
         icon: "finder.png",
         subMenu: [
           {
-            name: "파일",
+            name: "메뉴",
             subMenu: [
               {
                 name: "닫기",
