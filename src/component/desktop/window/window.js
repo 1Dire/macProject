@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
-import ResizableDiv from "./DivList";
+import Finder from "./Finder";
+import Talk from "./Talk"
 //mock
 import mockWindowList from "mock/windowList";
 //css
@@ -51,7 +52,7 @@ const WindowContent = () => {
         let render;
         if (name === "Finder") {
           render = (
-            <ResizableDiv
+            <Finder
               zIndex={zIndex}
               id={id}
               name={name}
@@ -60,9 +61,11 @@ const WindowContent = () => {
               positionX={postionX}
               positionY={positionY}
               show={show}
-            ></ResizableDiv>
+            ></Finder>
             
           );
+        }else if(name === "Talk"){
+          render =''
         }
         return <div key={i}>{render}</div>;
       })}

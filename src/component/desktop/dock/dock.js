@@ -23,6 +23,7 @@ const Dock = () => {
   const [loding, setLoading] = useState(false);
 
   function iconClickEvent(value) {
+    console.log('value',value)
     let object = { ...value };
     let index = openWindowList.findIndex((item) => item.name === object.name);
     if (index < 0) {

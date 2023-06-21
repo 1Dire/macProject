@@ -48,8 +48,11 @@
   display: none;
 }
 .subMenu > ul.open {
-  display: block ;
+  display: block;
 }
 .subMenu > ul > li {
   padding: 5px;
+}
+.sub-title.open {
+  background-color: rgba(255, 255, 255, 0.5);
 }

@@ -89,7 +89,9 @@ const MenuBar = () => {
                         onClick={() => {
                           menuOpen(value);
                         }}
-                        className={styles["sub-title"]}
+                        className={`${styles["sub-title"]} ${
+                          value.show ? styles.open : ""
+                        }`}
                       >
                         <span>{value.name}</span>
                       </div>
