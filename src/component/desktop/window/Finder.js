@@ -12,43 +12,42 @@ import {
 } from "store";
 
 const ResizableDiv = (props) => {
-  let openWindowList = useSelector((state) => {
-    return state.openWindowList;
-  });
-  let dispatch = useDispatch();
   const ref = useRef(null);
-  const [id] = useState(props.id);
-  const [size, setSize] = useState({
-    width: props.width,
-    height: props.height,
-  });
-  const [zIndex, setIndex] = useState(props.zIndex);
-  const [positionX] = useState(props.positionX);
-  const [positionY] = useState(props.positionY);
-  const [isMinimized, setIsMinimized] = useState(props.show); //최소화
+  const dispatch = useDispatch();
+
+  const openWindowList = useSelector((state) => state.openWindowList);
+
+  const { id, width, height, zIndex, positionX, positionY, show } = props;
+
+  const [size, setSize] = useState({ width, height });
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+  const [isMinimized, setIsMinimized] = useState(show);
   const [moveMode, setMoveMode] = useState(true);
-  const [position, setPosition] = useState({ x: 0, y: 0 }); // 초기 위치
   const [showComponent, setShowComponent] = useState(false);
   const [transition, setTransition] = useState(false);
+
   useEffect(() => {
-    setIsMinimized(props.show);
-  }, [props]);
+    setIsMinimized(show);
+  }, [show]);
+
   useEffect(() => {
     const resizeEle = props.contentRef.current;
-    let styled = window.getComputedStyle(resizeEle);
+    const styled = window.getComputedStyle(resizeEle);
 
-    let contentWidth = styled.width;
-    let contentHeight = styled.height;
-    let paseWidth = parseInt(contentWidth, 10);
-    let paseHeight = parseInt(contentHeight, 10);
+    const contentWidth = styled.width;
+    const contentHeight = styled.height;
+    const parsedWidth = parseInt(contentWidth, 10);
+    const parsedHeight = parseInt(contentHeight, 10);
 
-    let positionWidth =
-      (parseFloat(positionX.replace("%", "")) / 100) * paseWidth;
-    let positionHeight =
-      (parseFloat(positionY.replace("%", "")) / 100) * paseHeight;
+    const positionWidth =
+      (parseFloat(positionX.replace("%", "")) / 100) * parsedWidth;
+    const positionHeight =
+      (parseFloat(positionY.replace("%", "")) / 100) * parsedHeight;
+
     setPosition({ x: positionWidth, y: positionHeight });
     setShowComponent(true);
   }, []);
+
   const handleContentClick = (e) => {
     e.stopPropagation();
     // 내부 컨텐츠를 클릭한 경우, 원하는 동작을 수행
@@ -56,12 +55,12 @@ const ResizableDiv = (props) => {
 
   const handleBoxClick = () => {
     // 박스를 클릭한 경우, 원하는 동작을 수행
-    let topZindex = openWindowList.reduce((prev, current) => {
+    const topZindex = openWindowList.reduce((prev, current) => {
       return prev.zIndex > current.zIndex ? prev : current;
     });
 
     if (topZindex.id !== id) {
-      let param = {
+      const param = {
         index: openWindowList.findIndex((item) => item.id === id),
         topZindex: topZindex.zIndex + 1,
       };
@@ -71,47 +70,56 @@ const ResizableDiv = (props) => {
   };
 
   const handleResizeStop = (e, direction, ref, delta, position) => {
-    // 모서리 클릭한 경우 원는 동작을 수행
+    // 모서리를 드래그한 경우 원하는 동작을 수행
+    setTransition(false);
     const { width, height } = ref.style;
     const { x, y } = position;
     setSize({ width, height });
     setPosition({ x, y });
   };
 
-  const handleResize = (e, direction, ref, delta, position) => {};
+  const handleBoxResize = () => {
+    setTransition(true);
+  };
+
+  const handleResize = (e, direction, ref, delta, position) => {
+    // 리사이즈 중에 발생하는 이벤트를 처리
+  };
+
   const closeWindow = () => {
-    let index = openWindowList.findIndex((item) => item.id === id);
-    // //닫기버튼 클릭시
+    const index = openWindowList.findIndex((item) => item.id === id);
     dispatch(openWindowListRemove(index));
   };
+
   const minimizeBt = () => {
-    let index = openWindowList.findIndex((item) => item.id === id);
+    const index = openWindowList.findIndex((item) => item.id === id);
     dispatch(openWindowShowChange(index));
   };
+
   return (
     <>
       {showComponent && (
         <Rnd
+          ref={ref}
           style={{
             position: "absolute",
             zIndex: zIndex,
-          }}
-          onMouseEnter={() => {
-            setTransition(true);
-          }}
-          onMouseLeave={() => {
-            setTransition(false);
           }}
           size={size}
           position={position}
           disableDragging={moveMode}
           onDragStop={(e, d) => {
+            setTransition(false);
             setPosition({ x: d.x, y: d.y });
           }}
+          onDragStart={() => {
+            setTransition(true);
+          }}
           className={`${styles.window} ${isMinimized ? "" : styles.minimized} ${
-            transition || moveMode ? styles.grap : ""
+            transition ? "" : styles.transition
           }`}
           onResizeStop={handleResizeStop}
+          onResizeStart={handleBoxResize}
           onResize={handleResize}
           onClick={handleBoxClick}
         >
@@ -185,13 +193,11 @@ const ResizableDiv = (props) => {
                     <span>즐겨찾기</span>
                   </div>
                   <ul className={styles["content-list"]}>
-                    {favorites.map(function (a, i) {
-                      return (
-                        <li key={i}>
-                          <span>{a.text}</span>
-                        </li>
-                      );
-                    })}
+                    {favorites.map((a, i) => (
+                      <li key={i}>
+                        <span>{a.text}</span>
+                      </li>
+                    ))}
                   </ul>
                   <div
                     className={`${styles["content-title"]} ${styles.favorites}`}
@@ -199,13 +205,11 @@ const ResizableDiv = (props) => {
                     <span>iCloud</span>
                   </div>
                   <ul className={`${styles["content-list"]}`}>
-                    {iCloud.map(function (a, i) {
-                      return (
-                        <li key={i}>
-                          <span>{a.text}</span>
-                        </li>
-                      );
-                    })}
+                    {iCloud.map((a, i) => (
+                      <li key={i}>
+                        <span>{a.text}</span>
+                      </li>
+                    ))}
                   </ul>
                 </div>
               </div>
@@ -233,7 +237,7 @@ const ResizableDiv = (props) => {
                             setMoveMode(false);
                           }}
                         >
-                          <FiChevronLeft></FiChevronLeft>
+                          <FiChevronLeft />
                         </span>
 
                         <span
@@ -244,7 +248,7 @@ const ResizableDiv = (props) => {
                             setMoveMode(false);
                           }}
                         >
-                          <FiChevronRight></FiChevronRight>
+                          <FiChevronRight />
                         </span>
                       </div>
                     </li>

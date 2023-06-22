@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Finder from "./Finder";
 import Talk from "./Talk";
 //mock
@@ -6,6 +6,7 @@ import mockWindowList from "mock/windowList";
 //css
 import styles from "style/window.module.css";
 import { useSelector } from "react-redux";
+
 const WindowContent = () => {
   const ref = useRef(null);
   let openWindowList = useSelector((state) => {
@@ -50,7 +51,6 @@ const WindowContent = () => {
         let zIndex = value.zIndex;
         let render;
         if (name === "Finder") {
-          console.log("show", show);
           render = (
             <Finder
               contentRef={ref}
@@ -65,9 +65,21 @@ const WindowContent = () => {
             ></Finder>
           );
         } else if (name === "Talk") {
-          render = <div>ddddddd</div>;
+          render = (
+            <Talk
+              contentRef={ref}
+              zIndex={zIndex}
+              id={id}
+              name={name}
+              width={width}
+              height={height}
+              positionX={postionX}
+              positionY={positionY}
+              show={show}
+            ></Talk>
+          );
         }
-        return <>{render}</>;
+        return <React.Fragment key={i}>{render}</React.Fragment>;
       })}
     </div>
   );

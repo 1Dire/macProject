@@ -38,7 +38,7 @@ const Dock = () => {
         });
         object.zIndex = topZindex.zIndex + 1;
       }
-
+      console.log('object',object)
       dispatch(openWindowListAdd(object));
     } else {
       dispatch(openWindowShowChange(index));

@@ -9,12 +9,12 @@ const windowList = [
     },
   },
   {
-    name: "window",
-    width: "50%",
-    height: "50%",
+    name: "Talk",
+    width: "350px",
+    height: "600px",
     position: {
-      x: "10%",
-      y: "5%",
+      x: "30%",
+      y: "15%",
     },
   },
 ];
