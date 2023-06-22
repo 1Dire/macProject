@@ -1,13 +1,13 @@
 import { useState, useEffect, useRef } from "react";
 import Finder from "./Finder";
-import Talk from "./Talk"
+import Talk from "./Talk";
 //mock
 import mockWindowList from "mock/windowList";
 //css
 import styles from "style/window.module.css";
 import { useSelector } from "react-redux";
-
 const WindowContent = () => {
+  const ref = useRef(null);
   let openWindowList = useSelector((state) => {
     return state.openWindowList;
   });
@@ -16,7 +16,6 @@ const WindowContent = () => {
   }); // 목업 모드
   //state
   const [windowList, setWindowList] = useState([]);
-
   //useEffect
   useEffect(() => {
     let array = [];
@@ -39,7 +38,7 @@ const WindowContent = () => {
   }, [openWindowList]);
 
   return (
-    <div id="content" className={styles.content}>
+    <div id="content" className={styles.content} ref={ref}>
       {windowList.map(function (value, i) {
         let id = value.id;
         let name = value.name;
@@ -51,8 +50,10 @@ const WindowContent = () => {
         let zIndex = value.zIndex;
         let render;
         if (name === "Finder") {
+          console.log("show", show);
           render = (
             <Finder
+              contentRef={ref}
               zIndex={zIndex}
               id={id}
               name={name}
@@ -62,12 +63,11 @@ const WindowContent = () => {
               positionY={positionY}
               show={show}
             ></Finder>
-            
           );
-        }else if(name === "Talk"){
-          render =''
+        } else if (name === "Talk") {
+          render = <div>ddddddd</div>;
         }
-        return <div key={i}>{render}</div>;
+        return <>{render}</>;
       })}
     </div>
   );

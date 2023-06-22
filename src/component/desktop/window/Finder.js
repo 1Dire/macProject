@@ -3,7 +3,7 @@ import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import { Rnd } from "react-rnd";
 import favorites from "mock/favorites";
 import iCloud from "mock/icloud";
-import styles from "style/divList.module.css";
+import styles from "style/Finder.module.css";
 import { useSelector, useDispatch } from "react-redux";
 import {
   openWindowListRemove,
@@ -29,12 +29,14 @@ const ResizableDiv = (props) => {
   const [moveMode, setMoveMode] = useState(true);
   const [position, setPosition] = useState({ x: 0, y: 0 }); // 초기 위치
   const [showComponent, setShowComponent] = useState(false);
+  const [transition, setTransition] = useState(false);
   useEffect(() => {
     setIsMinimized(props.show);
   }, [props]);
   useEffect(() => {
-    const resizeEle = ref.current;
-    const styled = window.getComputedStyle(resizeEle);
+    const resizeEle = props.contentRef.current;
+    let styled = window.getComputedStyle(resizeEle);
+
     let contentWidth = styled.width;
     let contentHeight = styled.height;
     let paseWidth = parseInt(contentWidth, 10);
@@ -87,22 +89,18 @@ const ResizableDiv = (props) => {
     dispatch(openWindowShowChange(index));
   };
   return (
-    <div
-      ref={ref}
-      id={"rnd_" + id}
-      className={`${styles.window} ${isMinimized ? "" : styles.minimized}`}
-      style={{
-        position: "absolute",
-        width: "100%",
-        height: "100%",
-        zIndex: zIndex,
-      }}
-    >
+    <>
       {showComponent && (
         <Rnd
           style={{
             position: "absolute",
             zIndex: zIndex,
+          }}
+          onMouseEnter={() => {
+            setTransition(true);
+          }}
+          onMouseLeave={() => {
+            setTransition(false);
           }}
           size={size}
           position={position}
@@ -110,6 +108,9 @@ const ResizableDiv = (props) => {
           onDragStop={(e, d) => {
             setPosition({ x: d.x, y: d.y });
           }}
+          className={`${styles.window} ${isMinimized ? "" : styles.minimized} ${
+            transition || moveMode ? styles.grap : ""
+          }`}
           onResizeStop={handleResizeStop}
           onResize={handleResize}
           onClick={handleBoxClick}
@@ -248,7 +249,7 @@ const ResizableDiv = (props) => {
                       </div>
                     </li>
                     <li className={styles.title}>
-                      <span>title</span>
+                      <span>Finder</span>
                     </li>
                     <li>3ㅇ</li>
                   </ul>
@@ -258,7 +259,7 @@ const ResizableDiv = (props) => {
           </div>
         </Rnd>
       )}
-    </div>
+    </>
   );
 };
 

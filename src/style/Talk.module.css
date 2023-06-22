@@ -85,8 +85,8 @@
 .window {
   transition: transform 0.5s ease;
 
-  transform: translate(0, 0) scale(1, 1) skew(0deg, 0deg);
+  transform: translate(0, 0) scale(1, 1) skew(0deg, 0deg) 
 }
 .window.minimized {
-  transform: translate(50%, 100%) scale(0, 0) skew(-20deg, 0);
+  transform: translate(100vw, 100vh) scale(0, 0) skew(-20deg, 0) !important ;
 }
