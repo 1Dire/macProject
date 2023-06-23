@@ -212,7 +212,13 @@ const Talk = (props) => {
                   <div className={styles["user-info"]}>
                     <div className={styles["user-image"]}>
                       <div className={styles["user-image-inner"]}>
-                        <div className={styles["image"]}></div>
+                        <div className={styles["image"]}>
+                          <img
+                            src={`/warwick.png`}
+                            width="100%"
+                            height="100%"
+                          ></img>
+                        </div>
                       </div>
                     </div>
                     <div className={styles["user-name"]}>
@@ -221,6 +227,15 @@ const Talk = (props) => {
                         <li>아이디</li>
                       </ul>
                     </div>
+                  </div>
+                  <div className={styles["readMe"]}>
+                    <h1>프로젝트 설명</h1>
+                    <p>
+                      {" "}
+                      소켓통신을 활용해 서버와 실시간 자료를 수집하고 그데이터를
+                      기반으로 우리가 일상에서 사용하고있는 메신저 앱을
+                      만들었습니다.
+                    </p>
                   </div>
                 </div>
               </div>
