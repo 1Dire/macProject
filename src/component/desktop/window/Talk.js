@@ -1,8 +1,7 @@
 import { useState, useRef, useEffect } from "react";
-import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import { Rnd } from "react-rnd";
-import favorites from "mock/favorites";
-import iCloud from "mock/icloud";
+import { AiOutlineInfoCircle } from "react-icons/ai";
+import { BsFillChatDotsFill } from "react-icons/bs";
 import styles from "style/Talk.module.css";
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -10,7 +9,36 @@ import {
   openWindowShowChange,
   zIndexChange,
 } from "store";
+import io from "socket.io-client";
 
+const chatData = [
+  {
+    id: 1,
+    sender: "user1",
+    message: "안녕하세요!",
+    timestamp: new Date("2023-06-26T10:00:00.000Z"),
+  },
+  {
+    id: 2,
+    sender: "user2",
+    message: "안녕하세요! 어떤 도움이 필요하신가요?",
+    timestamp: new Date("2023-06-26T10:01:00.000Z"),
+  },
+  {
+    id: 3,
+    sender: "user3",
+    message: "저는 채팅 프로그램을 만드는 중인데 도움이 필요해요.",
+    timestamp: new Date("2023-06-26T10:02:00.000Z"),
+  },
+  {
+    id: 4,
+    sender: "user4",
+    message: "무엇을 도와드릴까요?",
+    timestamp: new Date("2023-06-26T10:03:00.000Z"),
+  },
+  // 추가적인 채팅 데이터를 원하실 경우 여기에 추가해주세요.
+];
+const socket = io.connect("http://localhost:3001");
 const Talk = (props) => {
   const ref = useRef(null);
   const dispatch = useDispatch();
@@ -18,14 +46,20 @@ const Talk = (props) => {
   const openWindowList = useSelector((state) => state.openWindowList);
 
   const { id, width, height, zIndex, positionX, positionY, show } = props;
-
   const [size, setSize] = useState({ width, height });
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isMinimized, setIsMinimized] = useState(show);
   const [moveMode, setMoveMode] = useState(true);
   const [showComponent, setShowComponent] = useState(false);
   const [transition, setTransition] = useState(false);
+  const [menu, setMenu] = useState("info");
+  const [message, setMessage] = useState("");
 
+  useEffect(() => {
+    socket.on("receive_message", (data) => {
+      alert(data.message);
+    });
+  }, [socket]);
   useEffect(() => {
     setIsMinimized(show);
   }, [show]);
@@ -75,6 +109,7 @@ const Talk = (props) => {
     const { width, height } = ref.style;
     const { x, y } = position;
     setSize({ width, height });
+
     setPosition({ x, y });
   };
 
@@ -95,7 +130,9 @@ const Talk = (props) => {
     const index = openWindowList.findIndex((item) => item.id === id);
     dispatch(openWindowShowChange(index));
   };
-
+  const sendMessage = () => {
+    socket.emit("send_message", { message: "Hello" });
+  };
   return (
     <>
       {showComponent && (
@@ -106,6 +143,8 @@ const Talk = (props) => {
             zIndex: zIndex,
           }}
           size={size}
+          minWidth={350}
+          minHeight={550}
           position={position}
           disableDragging={moveMode}
           onDragStop={(e, d) => {
@@ -196,48 +235,132 @@ const Talk = (props) => {
                   </ul>
                 </div>
               </div>
+
               <div className={styles["dim"]}></div>
               <div className={styles["view"]}>
                 <div className={styles["left-nav"]}>
                   <ul>
-                    <li>
-                      <span>메뉴1</span>
+                    <li
+                      onClick={() => {
+                        setMenu("info");
+                      }}
+                    >
+                      <span
+                        className={`${menu === "info" ? styles.select : ""}`}
+                      >
+                        <AiOutlineInfoCircle />
+                      </span>
                     </li>
-                    <li>
-                      <span>메뉴2</span>
+                    <li
+                      onClick={() => {
+                        setMenu("chat");
+                      }}
+                    >
+                      <span
+                        className={`${menu === "chat" ? styles.select : ""}`}
+                      >
+                        <BsFillChatDotsFill />
+                      </span>
                     </li>
                   </ul>
                 </div>
-                <div className={styles["view-content"]}>
-                  <div className={styles["user-info"]}>
-                    <div className={styles["user-image"]}>
-                      <div className={styles["user-image-inner"]}>
-                        <div className={styles["image"]}>
-                          <img
-                            src={`/warwick.png`}
-                            width="100%"
-                            height="100%"
-                          ></img>
+                {menu === "info" && (
+                  <div className={styles["view-content"]}>
+                    <div className={styles["user-info"]}>
+                      <div className={styles["user-image"]}>
+                        <div className={styles["user-image-inner"]}>
+                          <div className={styles["image"]}>
+                            <img
+                              src={`/talk/Delivery boy-1.png`}
+                              width="100%"
+                              height="100%"
+                            ></img>
+                          </div>
                         </div>
                       </div>
+                      <div className={styles["user-name"]}>
+                        <ul>
+                          <li>이름</li>
+                          <li>아이디</li>
+                        </ul>
+                      </div>
                     </div>
-                    <div className={styles["user-name"]}>
-                      <ul>
-                        <li>이름</li>
-                        <li>아이디</li>
-                      </ul>
+                    <div className={styles["readMe"]}>
+                      <h3>Project Overview </h3>
+                      <div>
+                        <p>
+                          My project is a real-time chat application developed
+                          using Socket.IO and Express. This application allows
+                          users to exchange messages in real-time.
+                        </p>
+                        <p>
+                          By utilizing Express, you have built a web server, and
+                          Socket.IO enables bi-directional communication between
+                          the client and the server. Users can access the
+                          application through a web browser and send/receive
+                          messages in real-time.
+                        </p>
+                        <p>
+                          Using event-based communication provided by Socket.IO,
+                          whenever a new message is received, it is broadcasted
+                          to all connected clients. This allows all users to
+                          engage in real-time conversations with each other.
+                        </p>
+                        <p>
+                          Additionally, with Express, you can implement other
+                          features and pages within the application. For
+                          example, you can incorporate functionalities such as
+                          user authentication, chat room creation, or message
+                          history.
+                        </p>
+                        <p>
+                          This project serves as an example of integrating
+                          Socket.IO and Express to create a real-time chat
+                          functionality. Users can experience immediate
+                          responses and engage in real-time interactions through
+                          this application.
+                        </p>
+                      </div>
                     </div>
                   </div>
-                  <div className={styles["readMe"]}>
-                    <h1>프로젝트 설명</h1>
-                    <p>
-                      {" "}
-                      소켓통신을 활용해 서버와 실시간 자료를 수집하고 그데이터를
-                      기반으로 우리가 일상에서 사용하고있는 메신저 앱을
-                      만들었습니다.
-                    </p>
+                )}
+                {menu === "chat" && (
+                  <div className={styles["chat"]}>
+                    <h2>Chating Room</h2>
+                    <ul>
+                      {chatData.map((value, i) => (
+                        <li key={i}>
+                          <div className={styles["chat-img"]}>
+                            <div>
+                              <img
+                                src={`/talk/Delivery boy-1.png`}
+                                width="100%"
+                                height="100%"
+                              ></img>
+                            </div>
+                          </div>
+                          <div className={styles["chat-text"]}>
+                            <div
+                              className={styles["text-inner"]}
+                              id={`chat-${value.id}`}
+                            >
+                              <span className={styles["sender"]}>
+                                {value.sender}
+                              </span>
+                              <span className={styles["timestamp"]}>
+                                {value.timestamp.toLocaleString("ko-KR", {
+                                  month: "long",
+                                  day: "numeric",
+                                })}
+                              </span>
+                            </div>
+                            <p className={styles["message"]}>{value.message}</p>
+                          </div>
+                        </li>
+                      ))}
+                    </ul>
                   </div>
-                </div>
+                )}
               </div>
             </div>
           </div>
