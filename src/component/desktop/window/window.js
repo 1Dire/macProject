@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import Finder from "./Finder";
 import Talk from "./Talk";
+import ChatRoom from "./ChatRoom";
 //mock
 import mockWindowList from "mock/windowList";
 //css
@@ -28,6 +29,10 @@ const WindowContent = () => {
             j.show = i.show;
             j.zIndex = i.zIndex;
             array.push(j);
+            if (i.name === "ChatRoom") {
+              j.roomName = i.roomName;
+              j.roomId = i.roomId;
+            }
           }
         });
       });
@@ -50,6 +55,7 @@ const WindowContent = () => {
         let show = value.show;
         let zIndex = value.zIndex;
         let render;
+
         if (name === "Finder") {
           render = (
             <Finder
@@ -77,6 +83,24 @@ const WindowContent = () => {
               positionY={positionY}
               show={show}
             ></Talk>
+          );
+        } else if (name === "ChatRoom") {
+          let roomName = value.roomName;
+          let roomId = value.roomId;
+          render = (
+            <ChatRoom
+              contentRef={ref}
+              zIndex={zIndex}
+              id={id}
+              name={name}
+              width={width}
+              height={height}
+              positionX={postionX}
+              positionY={positionY}
+              show={show}
+              roomId={roomId}
+              roomName={roomName}
+            ></ChatRoom>
           );
         }
         return <React.Fragment key={i}>{render}</React.Fragment>;

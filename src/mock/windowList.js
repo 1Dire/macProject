@@ -17,6 +17,15 @@ const windowList = [
       y: "15%",
     },
   },
+  {
+    name: "ChatRoom",
+    width: "350px",
+    height: "600px",
+    position: {
+      x: "50%",
+      y: "15%",
+    },
+  },
 ];
 
 export default windowList;

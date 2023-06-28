@@ -23,12 +23,19 @@ const Dock = () => {
   const [loding, setLoading] = useState(false);
 
   function iconClickEvent(value) {
-    console.log('value',value)
+
     let object = { ...value };
     let index = openWindowList.findIndex((item) => item.name === object.name);
+    let topId =
+      openWindowList.length > 0
+        ? openWindowList.reduce((prev, current) => {
+            return prev.id > current.id ? prev : current;
+          })
+        : null;
+
     if (index < 0) {
       //배열내 이미존재하면
-      object.id = openWindowList.length + 1;
+      object.id = topId === null ? 1 : topId.id + 1;
       object.show = true;
       if (openWindowList.length === 0) {
         object.zIndex = 1;
@@ -38,7 +45,6 @@ const Dock = () => {
         });
         object.zIndex = topZindex.zIndex + 1;
       }
-      console.log('object',object)
       dispatch(openWindowListAdd(object));
     } else {
       dispatch(openWindowShowChange(index));

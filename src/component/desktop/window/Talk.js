@@ -3,36 +3,38 @@ import { Rnd } from "react-rnd";
 import { AiOutlineInfoCircle } from "react-icons/ai";
 import { BsFillChatDotsFill } from "react-icons/bs";
 import styles from "style/Talk.module.css";
+import { BiMessageAdd } from "react-icons/bi";
 import { useSelector, useDispatch } from "react-redux";
 import {
   openWindowListRemove,
   openWindowShowChange,
   zIndexChange,
+  openWindowListAdd,
 } from "store";
 import io from "socket.io-client";
 
 const chatData = [
   {
     id: 1,
-    sender: "user1",
+    roomName: "user1",
     message: "안녕하세요!",
     timestamp: new Date("2023-06-26T10:00:00.000Z"),
   },
   {
     id: 2,
-    sender: "user2",
+    roomName: "user2",
     message: "안녕하세요! 어떤 도움이 필요하신가요?",
     timestamp: new Date("2023-06-26T10:01:00.000Z"),
   },
   {
     id: 3,
-    sender: "user3",
+    roomName: "user3",
     message: "저는 채팅 프로그램을 만드는 중인데 도움이 필요해요.",
     timestamp: new Date("2023-06-26T10:02:00.000Z"),
   },
   {
     id: 4,
-    sender: "user4",
+    roomName: "user4",
     message: "무엇을 도와드릴까요?",
     timestamp: new Date("2023-06-26T10:03:00.000Z"),
   },
@@ -132,6 +134,30 @@ const Talk = (props) => {
   };
   const sendMessage = () => {
     socket.emit("send_message", { message: "Hello" });
+  };
+  const chatRoomOpen = (value) => {
+
+    let index = openWindowList.findIndex(
+      (item) => item.name === "ChatRoom" && item.roomId === value.id
+    );
+    if (index < 0) {
+      let topId = openWindowList.reduce((prev, current) => {
+        return prev.id > current.id ? prev : current;
+      });
+      let topZindex = openWindowList.reduce((prev, current) => {
+        return prev.zIndex > current.zIndex ? prev : current;
+      });
+      const object = {
+        display: "Talk",
+        name: "ChatRoom",
+        roomId: value.id,
+        zIndex: topZindex.zIndex + 1,
+        id: topId.id + 1,
+        show: true,
+        roomName:value.roomName
+      };
+      dispatch(openWindowListAdd(object));
+    }
   };
   return (
     <>
@@ -329,7 +355,12 @@ const Talk = (props) => {
                     <h2>Chating Room</h2>
                     <ul>
                       {chatData.map((value, i) => (
-                        <li key={i}>
+                        <li
+                          key={i}
+                          onDoubleClick={() => {
+                            chatRoomOpen(value);
+                          }}
+                        >
                           <div className={styles["chat-img"]}>
                             <div>
                               <img
@@ -344,8 +375,8 @@ const Talk = (props) => {
                               className={styles["text-inner"]}
                               id={`chat-${value.id}`}
                             >
-                              <span className={styles["sender"]}>
-                                {value.sender}
+                              <span className={styles["roomName"]}>
+                                {value.roomName}
                               </span>
                               <span className={styles["timestamp"]}>
                                 {value.timestamp.toLocaleString("ko-KR", {
