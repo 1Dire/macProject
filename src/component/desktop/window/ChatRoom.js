@@ -10,7 +10,7 @@ import {
   zIndexChange,
   openWindowListAdd,
 } from "store";
-import io from "socket.io-client";
+// import io from "socket.io-client";
 
 const chatData = [
   {
@@ -74,7 +74,7 @@ const chatData = [
   },
   // 추가적인 채팅 데이터를 원하실 경우 여기에 추가해주세요.
 ];
-const socket = io.connect("http://localhost:3001");
+
 const ChatRoom = (props) => {
   const ref = useRef(null);
   const dispatch = useDispatch();
@@ -99,11 +99,11 @@ const ChatRoom = (props) => {
   const [showComponent, setShowComponent] = useState(false);
   const [transition, setTransition] = useState(false);
 
-  useEffect(() => {
-    socket.on("receive_message", (data) => {
-      enter(data.message);
-    });
-  }, [socket]);
+  // useEffect(() => {
+  //   socket.on("receive_message", (data) => {
+  //     enter(data.message);
+  //   });
+  // }, [socket]);
   useEffect(() => {
     setIsMinimized(show);
   }, [show]);
@@ -174,9 +174,9 @@ const ChatRoom = (props) => {
   //   const index = openWindowList.findIndex((item) => item.id === id);
   //   dispatch(openWindowShowChange(index));
   // };
-  const sendMessage = () => {
-    socket.emit("send_message", { message: "Hello" });
-  };
+  // const sendMessage = () => {
+  //   socket.emit("send_message", { message: "Hello" });
+  // };
   const chatRoomOpen = (value) => {
     let index = openWindowList.findIndex(
       (item) => item.name === "ChatRoom" && item.roomId === value.id

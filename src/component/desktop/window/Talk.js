@@ -11,7 +11,7 @@ import {
   zIndexChange,
   openWindowListAdd,
 } from "store";
-import io from "socket.io-client";
+// import io from "socket.io-client";
 
 const chatData = [
   {
@@ -40,7 +40,7 @@ const chatData = [
   },
   // 추가적인 채팅 데이터를 원하실 경우 여기에 추가해주세요.
 ];
-const socket = io.connect("http://localhost:3001");
+// const socket = io.connect("http://localhost:3001");
 const Talk = (props) => {
   const ref = useRef(null);
   const dispatch = useDispatch();
@@ -57,11 +57,11 @@ const Talk = (props) => {
   const [menu, setMenu] = useState("info");
   const [message, setMessage] = useState("");
 
-  useEffect(() => {
-    socket.on("receive_message", (data) => {
-      alert(data.message);
-    });
-  }, [socket]);
+  // useEffect(() => {
+  //   socket.on("receive_message", (data) => {
+  //     alert(data.message);
+  //   });
+  // }, [socket]);
   useEffect(() => {
     setIsMinimized(show);
   }, [show]);

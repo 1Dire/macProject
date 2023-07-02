@@ -255,7 +255,7 @@ const ResizableDiv = (props) => {
                     <li className={styles.title}>
                       <span>Finder</span>
                     </li>
-                    <li>3ㅇ</li>
+                    <li></li>
                   </ul>
                 </div>
               </div>
