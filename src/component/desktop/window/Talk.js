@@ -136,7 +136,6 @@ const Talk = (props) => {
     socket.emit("send_message", { message: "Hello" });
   };
   const chatRoomOpen = (value) => {
-
     let index = openWindowList.findIndex(
       (item) => item.name === "ChatRoom" && item.roomId === value.id
     );
@@ -154,7 +153,7 @@ const Talk = (props) => {
         zIndex: topZindex.zIndex + 1,
         id: topId.id + 1,
         show: true,
-        roomName:value.roomName
+        roomName: value.roomName,
       };
       dispatch(openWindowListAdd(object));
     }

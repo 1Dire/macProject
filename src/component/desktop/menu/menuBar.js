@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import styles from "style/menuBar.module.css";
 import { useSelector, useDispatch } from "react-redux";
 import { focusChange, openWindowListRemove, openWindowShowChange } from "store";
+import { AiFillApple } from "react-icons/ai";
 import mockMenu from "mock/menu";
 
 const MenuBar = () => {
@@ -68,7 +69,7 @@ const MenuBar = () => {
     <div className={styles["menu-bar"]}>
       <ul>
         <li>
-          <span>애플</span>
+          <span style={{position:'relative',bottom:'-2px'}}><AiFillApple/></span>
         </li>
         {menu && (
           <>
